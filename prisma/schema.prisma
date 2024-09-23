@@ -10,17 +10,17 @@ datasource db {
 model Org {
   id         String   @id @default(uuid())
   name       String
-  email      String
+  email      String   @unique
   password   String
   authorName String   @map("author_name")
   whatsapp   String
-  createdAt  DateTime @map("created_at")
+  createdAt  DateTime @default(now()) @map("created_at")
 
-  cep           Int
-  city          String
-  state         String
-  street        String
-  neighbourhood String
+  zipCode      String @map("zip_code")
+  city         String
+  state        String
+  street       String
+  neighborhood String
 
   latitude  Decimal
   longitude Decimal
@@ -39,7 +39,7 @@ model Pet {
   energyLevel       String   @map("energy_level")
   independenceLevel String   @map("independence_level")
   environment       String
-  createdAt         DateTime @map("created_at")
+  createdAt         DateTime @default(now()) @map("created_at")
 
   org   Org?    @relation(fields: [orgId], references: [id])
   orgId String? @map("org_id")
