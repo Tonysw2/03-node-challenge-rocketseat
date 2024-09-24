@@ -41,8 +41,8 @@ model Pet {
   environment       String
   createdAt         DateTime @default(now()) @map("created_at")
 
-  org   Org?    @relation(fields: [orgId], references: [id])
-  orgId String? @map("org_id")
+  org   Org?   @relation(fields: [orgId], references: [id])
+  orgId String @map("org_id")
 
   @@map("pets")
 }
