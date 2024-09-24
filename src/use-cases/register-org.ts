@@ -1,7 +1,8 @@
 import type { IOrgsRepository } from '@/repositories/interfaces/orgs-repository-interface'
 import type { Org } from '@prisma/client'
+import { OrgAlreadyExistsError } from './error/org-already-exists-error'
 
-interface CreateOrgUseCaseRequest {
+interface RegisterUseCaseRequest {
   name: string
   email: string
   password: string
@@ -18,16 +19,22 @@ interface CreateOrgUseCaseRequest {
   longitude: number
 }
 
-interface CreateOrgUseCaseResponse {
+interface RegisterUseCaseResponse {
   org: Org
 }
 
-export class CreateOrgUseCase {
+export class RegisterUseCase {
   constructor(private orgsRepository: IOrgsRepository) {}
 
   async execute(
-    data: CreateOrgUseCaseRequest,
-  ): Promise<CreateOrgUseCaseResponse> {
+    data: RegisterUseCaseRequest,
+  ): Promise<RegisterUseCaseResponse> {
+    const orderExists = await this.orgsRepository.findByEmail(data.email)
+
+    if (orderExists) {
+      throw new OrgAlreadyExistsError()
+    }
+
     const org = await this.orgsRepository.create(data)
 
     return {

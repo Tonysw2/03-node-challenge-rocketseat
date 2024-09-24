@@ -5,6 +5,16 @@ import type { IOrgsRepository } from '../interfaces/orgs-repository-interface'
 export class InMemoryOrgsRepository implements IOrgsRepository {
   public items: Org[] = []
 
+  async findByEmail(email: string) {
+    const org = this.items.find((item) => item.email === email)
+
+    if (!org) {
+      return null
+    }
+
+    return org
+  }
+
   async create(data: Prisma.OrgCreateInput) {
     const org = {
       id: data.id ?? randomUUID(),
