@@ -8,13 +8,13 @@ datasource db {
 }
 
 model Org {
-  id         String   @id @default(uuid())
-  name       String
-  email      String   @unique
-  password   String
-  authorName String   @map("author_name")
-  whatsapp   String
-  createdAt  DateTime @default(now()) @map("created_at")
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  authorName   String   @map("author_name")
+  whatsapp     String
+  createdAt    DateTime @default(now()) @map("created_at")
 
   zipCode      String @map("zip_code")
   city         String

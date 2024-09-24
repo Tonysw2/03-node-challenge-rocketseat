@@ -21,7 +21,7 @@ export class InMemoryOrgsRepository implements IOrgsRepository {
       name: data.name,
       authorName: data.authorName,
       email: data.email,
-      password: data.password,
+      passwordHash: data.passwordHash,
       whatsapp: data.whatsapp,
       createdAt: new Date(),
 

@@ -1,6 +1,5 @@
 import { app } from '@/app'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/orgs-repository'
-import { hash } from 'bcryptjs'
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { OrgAlreadyExistsError } from './error/org-already-exists-error'
 import { RegisterUseCase } from './register-org'
@@ -23,13 +22,11 @@ describe('Register Use Case', () => {
   })
 
   it('should be able to create a org', async () => {
-    const password = await hash('123123123', 10)
-
     const { org } = await sut.execute({
       name: 'org-1',
       authorName: 'anthony ribeiro',
       email: 'anthony@email.com',
-      password,
+      password: '123123123',
       whatsapp: '+55123123123',
 
       zipCode: '12312-312',
@@ -47,13 +44,11 @@ describe('Register Use Case', () => {
   })
 
   it('should not be able to register with existent email', async () => {
-    const password = await hash('123123123', 10)
-
     await sut.execute({
       name: 'org-1',
       authorName: 'anthony ribeiro',
       email: 'anthony@email.com',
-      password,
+      password: '123123123',
       whatsapp: '+55123123123',
 
       zipCode: '12312-312',
@@ -71,7 +66,7 @@ describe('Register Use Case', () => {
         name: 'org-1',
         authorName: 'anthony ribeiro',
         email: 'anthony@email.com',
-        password,
+        password: '123123123',
         whatsapp: '+55123123123',
 
         zipCode: '12312-312',

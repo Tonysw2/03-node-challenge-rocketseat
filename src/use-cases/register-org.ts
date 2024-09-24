@@ -1,5 +1,6 @@
 import type { IOrgsRepository } from '@/repositories/interfaces/orgs-repository-interface'
 import type { Org } from '@prisma/client'
+import { hash } from 'bcryptjs'
 import { OrgAlreadyExistsError } from './error/org-already-exists-error'
 
 interface RegisterUseCaseRequest {
@@ -35,7 +36,12 @@ export class RegisterUseCase {
       throw new OrgAlreadyExistsError()
     }
 
-    const org = await this.orgsRepository.create(data)
+    const passwordHash = await hash(data.password, 10)
+
+    const org = await this.orgsRepository.create({
+      ...data,
+      passwordHash,
+    })
 
     return {
       org,
