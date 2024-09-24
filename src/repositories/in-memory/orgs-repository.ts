@@ -5,6 +5,16 @@ import type { IOrgsRepository } from '../interfaces/orgs-repository-interface'
 export class InMemoryOrgsRepository implements IOrgsRepository {
   public items: Org[] = []
 
+  async findById(orgId: string): Promise<Org | null> {
+    const org = this.items.find((item) => item.id === orgId)
+
+    if (!org) {
+      return null
+    }
+
+    return org
+  }
+
   async findByEmail(email: string) {
     const org = this.items.find((item) => item.email === email)
 
