@@ -15,6 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "@biomejs/biome": "1.9.2",
+    "@faker-js/faker": "9.0.2",
     "@types/bcryptjs": "2.4.6",
     "@types/node": "^22.5.5",
     "prisma": "5.19.1",
