@@ -1,5 +1,6 @@
 import { app } from '@/app'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/orgs-repository'
+import bcryptjs from 'bcryptjs'
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { AuthenticateUseCase } from './authenticate'
 import { InvalidCredentialsError } from './error/invalid-credentials-error'
