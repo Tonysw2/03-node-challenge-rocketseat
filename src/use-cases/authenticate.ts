@@ -1,5 +1,6 @@
 import type { IOrgsRepository } from '@/repositories/interfaces/orgs-repository-interface'
 import type { Org } from '@prisma/client'
+import bcryptjs from 'bcryptjs'
 import { InvalidCredentialsError } from './error/invalid-credentials-error'
 
 interface AuthenticateUseCaseRequest {
