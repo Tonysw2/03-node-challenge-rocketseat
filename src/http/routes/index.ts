@@ -4,6 +4,7 @@ import { register } from '../controller/orgs/register'
 import { createPet } from '../controller/pets/create-pet'
 import { getPetDetails } from '../controller/pets/get-pet-details'
 import { searchPets } from '../controller/pets/search-pets'
+import { refresh } from '../controller/refresh'
 import { verifyJWT } from '../middlewares/verify-jwt'
 
 export async function appRoutes(app: FastifyInstance) {
@@ -12,6 +13,7 @@ export async function appRoutes(app: FastifyInstance) {
   app.get('/pets/search', searchPets)
 
   // authorized routes
+  app.patch('/token/refresh', refresh)
   app.post('/pets', { onRequest: [verifyJWT] }, createPet)
   app.get('/pets/:petId', { onRequest: [verifyJWT] }, getPetDetails)
 }
