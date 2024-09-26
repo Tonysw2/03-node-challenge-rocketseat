@@ -5,6 +5,7 @@ import supertest from 'supertest'
 export async function createOrgAndAuthenticate(app: FastifyInstance) {
   const email = faker.internet.email()
   const password = faker.internet.password()
+  const city = faker.location.city()
 
   await supertest(app.server).post('/register').send({
     name: faker.company.name(),
@@ -13,7 +14,7 @@ export async function createOrgAndAuthenticate(app: FastifyInstance) {
     password,
     whatsapp: faker.phone.number(),
     zipCode: faker.location.zipCode(),
-    city: faker.location.city(),
+    city,
     state: faker.location.state(),
     neighborhood: faker.location.streetAddress(),
     street: faker.location.street(),
@@ -29,5 +30,6 @@ export async function createOrgAndAuthenticate(app: FastifyInstance) {
 
   return {
     token: authResponse.body.token,
+    orgCity: city,
   }
 }
