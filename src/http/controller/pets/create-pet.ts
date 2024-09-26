@@ -27,7 +27,7 @@ export async function createPet(request: FastifyRequest, reply: FastifyReply) {
   try {
     const createPetUseCase = makeCreatePetUseCase()
 
-    await createPetUseCase.execute({
+    const { pet } = await createPetUseCase.execute({
       orgId: request.user.sub,
       name,
       about,
@@ -38,13 +38,11 @@ export async function createPet(request: FastifyRequest, reply: FastifyReply) {
       independenceLevel,
     })
 
-    reply.code(201)
+    reply.code(201).send({ pet })
   } catch (error) {
     if (error instanceof OnlyOrgsCanRegisterPetError) {
       reply.code(401).send({ error: error.message })
     }
-
-    console.log(error)
 
     throw error
   }
