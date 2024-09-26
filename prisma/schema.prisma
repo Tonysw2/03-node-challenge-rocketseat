@@ -11,7 +11,7 @@ model Org {
   id           String   @id @default(uuid())
   name         String
   email        String   @unique
-  passwordHash String
+  passwordHash String   @map("password_hash")
   authorName   String   @map("author_name")
   whatsapp     String
   createdAt    DateTime @default(now()) @map("created_at")

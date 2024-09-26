@@ -1,6 +1,5 @@
 import { app } from '@/app'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/orgs-repository'
-import { hash } from 'bcryptjs'
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { AuthenticateUseCase } from './authenticate'
 import { InvalidCredentialsError } from './error/invalid-credentials-error'
@@ -21,7 +20,7 @@ describe('Authenticate Use Case', () => {
       name: 'org-1',
       authorName: 'anthony ribeiro',
       email: 'anthony@email.com',
-      passwordHash: await hash('123123123', 10),
+      passwordHash: await bcryptjs.hash('123123123', 10),
       whatsapp: '+55123123123',
 
       zipCode: '12312-312',

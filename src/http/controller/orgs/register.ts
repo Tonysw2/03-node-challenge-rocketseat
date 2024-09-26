@@ -1,3 +1,5 @@
+import { OrgAlreadyExistsError } from '@/use-cases/error/org-already-exists-error'
+import { makeRegisterUseCase } from '@/use-cases/factories/make-register-use-case'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -19,5 +21,19 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
     longitude: z.number(),
   })
 
-  const bodyParsed = registerBodySchema.parse(request.body)
+  const data = registerBodySchema.parse(request.body)
+
+  const registerUseCase = makeRegisterUseCase()
+
+  try {
+    await registerUseCase.execute(data)
+
+    reply.code(201)
+  } catch (error) {
+    if (error instanceof OrgAlreadyExistsError) {
+      reply.code(400).send({ error: error.message })
+    }
+
+    throw error
+  }
 }

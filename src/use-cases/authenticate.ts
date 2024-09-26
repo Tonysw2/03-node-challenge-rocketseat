@@ -1,6 +1,5 @@
 import type { IOrgsRepository } from '@/repositories/interfaces/orgs-repository-interface'
 import type { Org } from '@prisma/client'
-import { compare } from 'bcryptjs'
 import { InvalidCredentialsError } from './error/invalid-credentials-error'
 
 interface AuthenticateUseCaseRequest {
@@ -25,7 +24,7 @@ export class AuthenticateUseCase {
       throw new InvalidCredentialsError()
     }
 
-    const isValidPassword = await compare(password, org.passwordHash)
+    const isValidPassword = await bcryptjs.compare(password, org.passwordHash)
 
     if (!isValidPassword) {
       throw new InvalidCredentialsError()
